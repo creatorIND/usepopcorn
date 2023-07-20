@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Loader from "./Loader";
 import StarRating from "./StarRating";
+import { useKey } from "../useKey";
 
 const apiKey = import.meta.env.VITE_OMDB_SECRET_KEY;
 
@@ -47,22 +48,7 @@ export default function MovieDetails({
 		onCloseMovie();
 	}
 
-	useEffect(
-		function () {
-			function callback(e) {
-				if (e.code === "Escape") {
-					onCloseMovie();
-				}
-			}
-
-			document.addEventListener("keydown", callback);
-
-			return function () {
-				document.removeEventListener("keydown", callback);
-			};
-		},
-		[onCloseMovie]
-	);
+	useKey("Escape", onCloseMovie);
 
 	useEffect(
 		function () {
